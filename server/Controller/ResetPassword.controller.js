@@ -4,29 +4,7 @@ import User from '../Models/User.js';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
-
-
-const transport =nodemailer.createTransport({
-    service:process.env.SERVICE,
-
-    auth:{
-        user:process.env.MAIL_USER,
-        pass:process.env.MAIL_PASSWORD
-    }
-    ,
-    port:465,
-    host : 'smtp.gmail.com',
-}
-);
-
-
-
-
-
-
-
-
-
+import sendMail from '../Utils/Mail/SendMail.js';
 
 
 
@@ -52,18 +30,10 @@ export const forgetPassword = async (req, res,next) => {
        // create link to reset password
         const link = `http://localhost:4000/reset-password/${user.id}/${token}`;
         
-        // send email to user with link
-        const mailOptions = {
-            from: 'khalid.gamal.hamed@gmail.com',
-            to: user.email,
-            subject: 'Reset Password',
-            html: `<h1>Reset Password </h1>
-            <p>Click on the link to reset your password
-             link: ${link}
-            </p>
-            `
-        }
-        await transport.sendMail(mailOptions);
+       // send email to user with link
+
+        await sendMail(user.email,link);
+    
         return res.json({ msg: 'Email has been sent' });
     } catch (error) {
           next(error);
@@ -71,7 +41,6 @@ export const forgetPassword = async (req, res,next) => {
     }
 }
 
-//gym123456789
 
 export const validateResetPassword = async (req, res,next) => {
 
