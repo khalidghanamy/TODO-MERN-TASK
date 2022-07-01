@@ -8,6 +8,7 @@ import errorHandler from "./Middlewares/errorMiddleware.js";
 import notFound from "./Middlewares/notFoundMiddleware.js";
 import Auth from "./Routes/Auth.js";
 import ResetPassword from "./Routes/ResetPassword.js";
+import Tasks from "./Routes/Tasks.js";
 //=====================================================
 // Load environment variables from .env file
 dotenv.config();
@@ -31,6 +32,7 @@ app.use(cors());
 ResetPassword
 app.use("/auth", Auth);
 app.use(ResetPassword);
+app.use("/tasks", Tasks);
 
 
 
