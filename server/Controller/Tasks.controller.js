@@ -15,18 +15,26 @@ const checkUser = async (req, res, next) => {
 
 export const createTask = async (req, res,next) => {
 
-    const {description,startedAt,finishedAt} = req.body;
+    const {description} = req.body;
+    const {finishedAt} = new Date( req.body.finishedAt);
+    const {startedAt} = new Date( req.body.startedAt);
+    
     const {userId} = req.params;
     try{
         //check if user exist in database
        await checkUser(req,res,next);
         //create task
-        await Task.create({
+        const task =  await Task.create({
             description,
             status: "Todo",
             user: userId,
             startedAt,
             finishedAt
+        })
+        await User.findByIdAndUpdate(userId, {
+            $push: {
+                tasks: task._id
+            }
         })
 
         return res.json({ msg: 'Task has been created' });
@@ -47,7 +55,15 @@ export const getTasks = async (req, res,next) => {
         await checkUser(req,res,next);
             //get tasks
             const tasks = await User.findById(userId).populate("tasks");
-            return res.json(tasks);
+            const data = tasks.tasks.map(task => {
+                return {
+                  
+                    status: task.status,
+                    startedAt: task.startedAt,
+                    finishedAt: task.finishedAt
+                }
+            }); 
+            return res.json({userTasks:data});
     
         }catch(error){
             next(error);
