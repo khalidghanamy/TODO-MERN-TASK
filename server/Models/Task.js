@@ -27,8 +27,8 @@ const taskSchema = new Schema({
     }
     ,
     startedAt: {
-        type: Date,
-        default: Date.now
+        type: String,
+        default: Date.now.toString()
     }
     ,
     finishedAt: {

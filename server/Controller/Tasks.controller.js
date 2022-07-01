@@ -15,9 +15,8 @@ const checkUser = async (req, res, next) => {
 
 export const createTask = async (req, res,next) => {
 
-    const {description} = req.body;
-    const {finishedAt} = new Date( req.body.finishedAt);
-    const {startedAt} = new Date( req.body.startedAt);
+    
+    
     
     const {userId} = req.params;
     try{
@@ -25,11 +24,7 @@ export const createTask = async (req, res,next) => {
        await checkUser(req,res,next);
         //create task
         const task =  await Task.create({
-            description,
-            status: "Todo",
-            user: userId,
-            startedAt,
-            finishedAt
+            ...req.body,
         })
         await User.findByIdAndUpdate(userId, {
             $push: {
@@ -57,7 +52,9 @@ export const getTasks = async (req, res,next) => {
             const tasks = await User.findById(userId).populate("tasks");
             const data = tasks.tasks.map(task => {
                 return {
-                  
+                    title: task.title,
+                    description: task.description,
+                    priority: task.priority,
                     status: task.status,
                     startedAt: task.startedAt,
                     finishedAt: task.finishedAt
@@ -88,17 +85,17 @@ export const getTasks = async (req, res,next) => {
 
     export const updateTask = async (req, res,next) => {
         const {id} = req.params;
-        const {description,status,finishedAt} = req.body;
+        
         try{
             //check if user exist in database
         await checkUser(req,res,next);
             //update task
-            const task = await Task.findByIdAndUpdate(id,{
-                description,
-                status,
-                finishedAt
-            },{new:true});
-            return res.json(task ,{msg: "Task has been updated"});
+            const task = await Task.findByIdAndUpdate(id,
+                {$set: req.body},
+                {new:true});
+            return res.json(task ,
+
+                {msg: "Task has been updated"});
     
         }catch(error){
             next(error);
