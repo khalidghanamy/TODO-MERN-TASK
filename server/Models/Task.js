@@ -16,6 +16,17 @@ const taskSchema = new Schema({
         ref: "User"
 
     }
+    ,
+    startedAt: {
+        type: Date,
+        default: Date.now
+    }
+    ,
+    finishedAt: {
+        type: Date,
+        default: Date.now +(60*60)
+
+    }
 }
 );
 const Task = mongoose.model("Task", taskSchema);
