@@ -17,21 +17,20 @@ export const createTask = async (req, res,next) => {
 
     
     
-    
     const {userId} = req.params;
     try{
         //check if user exist in database
        await checkUser(req,res,next);
         //create task
-        const task =  await Task.create({
-            ...req.body,
-        })
-        await User.findByIdAndUpdate(userId, {
+        const task =  await Task.create(req.body);
+        //add task to user
+        const user = await User.findByIdAndUpdate(userId, {
             $push: {
                 tasks: task._id
             }
-        })
-
+        });
+        
+  
         return res.json({ msg: 'Task has been created' });
 
     }catch(error){

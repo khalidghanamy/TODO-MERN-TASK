@@ -28,13 +28,12 @@ const taskSchema = new Schema({
     ,
     startedAt: {
         type: String,
-        default: Date.now.toString()
+        default: "30/6/2022"
     }
     ,
     finishedAt: {
-        type: Date,
-        default: Date.now +(60*60)
-
+        type: String,
+        default: "1/7/2022"
     }
 }
 );
