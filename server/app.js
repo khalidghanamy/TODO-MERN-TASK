@@ -7,6 +7,7 @@ import connectToDb from "./Database/connection.js";
 import errorHandler from "./Middlewares/errorMiddleware.js";
 import notFound from "./Middlewares/notFoundMiddleware.js";
 import Auth from "./Routes/Auth.js";
+import ResetPassword from "./Routes/ResetPassword.js";
 //=====================================================
 // Load environment variables from .env file
 dotenv.config();
@@ -27,8 +28,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 //====> Routes <========================================
-
+ResetPassword
 app.use("/auth", Auth);
+app.use(ResetPassword);
 
 
 
