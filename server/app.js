@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import connectToDb from "./Database/connection.js";
 import errorHandler from "./Middlewares/errorMiddleware.js";
 import notFound from "./Middlewares/notFoundMiddleware.js";
+import Auth from "./Routes/Auth.js";
 //=====================================================
 // Load environment variables from .env file
 dotenv.config();
@@ -22,15 +23,16 @@ connectToDb(process.env.MONGO_URI,server);
 
 //======================================================
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 //====> Routes <========================================
 
-
+app.use("/auth", Auth);
 
 
 
 //====> Middleware <========================================
 
-app.use(notFound);
 app.use(errorHandler);
+app.use(notFound);
