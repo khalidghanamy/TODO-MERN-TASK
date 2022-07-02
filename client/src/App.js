@@ -1,22 +1,35 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import AddTask from './Components/AddTask.jsx';
-import Tasks from './Pages/Tasks';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import AddTask from "./Components/taskComponents/AddTask.jsx";
+import Tasks from "./Pages/Tasks";
+import {BrowserRouter,Routes,Route} from "react-router-dom"
+
+import { useEffect,useState } from "react";
+import useTasks from "./store/Task.js";
+import Home from "./Pages/Home";
+import Register from "./Pages/Authentication/Register.jsx";
+import Login from "./Pages/Authentication/Login.jsx";
+import ForgetPassword from "./Components/AuthComponents/ForgetPassword.jsx";
+import ResetPassword from "./Components/AuthComponents/ResetPassword.jsx";
 function App() {
+
   return (
     <>
-    <div className="App">
-    <div className="container p-0 m-0">
-      <div className="row mt-5 p-0 m-0">
-          <div className="col-lg-8 col-md-8 col-ms-12 d-flex justify-content-md-center p-0 m-0 ">
-          <AddTask />
-          </div>
-        <div className="col-lg-4 col-md-4 col-ms-12">
-          <Tasks />
-          </div>
-        </div>          
-    </div>
-    </div>
+      <div className="App  d-flex justify-content-center">
+       
+      <BrowserRouter>
+    <Routes>
+      <Route path="/home" element={<Home/>}/>
+      <Route path="/register" element={<Register/>}/>
+      <Route path="/login" element={<Login/>}/>
+      <Route path="/forgetpassword" element={<ForgetPassword/>}/>
+      <Route path="/resetpassword/:id/:token" element={<ResetPassword/>}/>
+    
+     
+    </Routes>
+    </BrowserRouter>
+        
+      </div>
     </>
   );
 }

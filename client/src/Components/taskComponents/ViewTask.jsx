@@ -1,18 +1,18 @@
 import {useState} from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import Modal from 'react-bootstrap/Modal';
-
+import {GrView} from 'react-icons/gr'
 
 function TaskDetails({task}) {
     const [show, setShow] = useState(false);
   
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-  
+   
     return (
       <>
-        <Button variant="primary" onClick={handleShow}>
-          Launch static backdrop modal
+        <Button variant="warning"className='m-2' onClick={handleShow}>
+            <GrView/>
         </Button>
   
         <Modal
