@@ -53,9 +53,13 @@ console.log(taskStatus);
 
             
             </div>
+
             )}
+
+
             </Draggable>
                 ))}
+                {provided.placeholder}
                 </div>
                 )}
                     </Droppable>
