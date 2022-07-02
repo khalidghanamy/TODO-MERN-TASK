@@ -13,9 +13,11 @@ const [filteredTasks, setFilteredTasks] = useState([]);
     }
 
     const onDragEnd = result => {
-        if (!result.destination) {
-            return;
-        }}
+        const items =Array.from(filteredTasks)
+        const [reOrderedItems] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reOrderedItems);
+        setFilteredTasks(items);
+    }
 
     useEffect(() => {
         setFilteredTasks(CheckStatus());
@@ -32,7 +34,7 @@ console.log(taskStatus);
                     <Card.Title className="d-flex justify-content-center"> {taskStatus} </Card.Title>
                 </Card.Header>
             <Card.Body>
-                <DragDropContext >
+                <DragDropContext onDragEnd={onDragEnd} >
                     <Droppable droppableId="droppable">
 
 
