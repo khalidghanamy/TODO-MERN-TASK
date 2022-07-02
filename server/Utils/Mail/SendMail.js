@@ -18,7 +18,6 @@ const transport =nodemailer.createTransport({
 );
 
 export const sendMail = async (userMail,link) => {
-        
         try {
     const mailOptions = {
         from: 'khalid.gamal.hamed@gmail.com',

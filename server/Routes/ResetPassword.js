@@ -6,9 +6,7 @@ const router = express.Router();
 
 //reset password
 router.post("/forget-password", forgetPassword);
-router.route("/reset-password/:id/:token")
-    .get(validateResetPassword)
-    .post(resetPassword);
+router.route("/reset-password").post(resetPassword);
 
 
 

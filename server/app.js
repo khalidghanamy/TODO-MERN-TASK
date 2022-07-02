@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 //====> Routes <========================================
-ResetPassword
+
 app.use("/auth", Auth);
 app.use(ResetPassword);
 app.use("/tasks", Tasks);

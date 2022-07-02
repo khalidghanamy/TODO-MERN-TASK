@@ -6,15 +6,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 import sendMail from '../Utils/Mail/SendMail.js';
 
-
-
 export const forgetPassword = async (req, res,next) => {
+    console.log( req.body);
     try {
         // make sure user exist in database
         const { email } = req.body;
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ msg: 'User does not exist' });
+            return res.status(400).json({status:false, msg: 'Invalid email' });
         }
         const payload = {
             user: {
@@ -28,13 +27,13 @@ export const forgetPassword = async (req, res,next) => {
        const token= jwt.sign(payload,secret, { expiresIn: '30m' });
 
        // create link to reset password
-        const link = `http://localhost:4000/reset-password/${user.id}/${token}`;
+        const link = `http://localhost:3000/resetpassword/${user.id}/${token}`;
         
-       // send email to user with link
-
+        // send email to user with link
+        
         await sendMail(user.email,link);
-    
-        return res.json({ msg: 'Email has been sent' });
+
+        return res.json({status:true, msg: 'Email has been sent' });
     } catch (error) {
           next(error);
       
@@ -49,7 +48,7 @@ export const validateResetPassword = async (req, res,next) => {
     //check if user exist in database
         const user = await User.findById(id);
         if (!user) {
-            return res.status(400).json({ msg: 'User does not exist' });
+            return res.status(400).json({status:false, msg: 'User does not exist' });
         }
     //check if token is valid
         const secret = process.env.JWT_SECRET + user.password;
@@ -63,24 +62,28 @@ export const validateResetPassword = async (req, res,next) => {
 
 export const resetPassword = async (req, res,next) => {
 
-    const { id, token } = req.params;
-    const { password } = req.body;
+    const { id, token,password } = req.body;
     try {
     //check if user exist in database
         const user = await User.findById(id);
         if (!user) {
-            return res.status(400).json({ msg: 'User does not exist' });
+            return res.status(400).json({status:false, msg: 'User does not exist' });
         }
     //check if token is valid
-        const secret = process.env.JWT_SECRET + user.password;
-        const payload = jwt.verify(token, secret);
-    
+        try {
+            const secret = process.env.JWT_SECRET + user.password;
+            const payload = jwt.verify(token, secret);
+        } catch (error) {
+            return res.status(400).json({status:false, msg: 'Invalid token' });
+
+        }
+        
     //update password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         user.password = hashedPassword;
         await user.save();
-        return res.json({ msg: 'Password has been updated' });
+        return res.status(200).json({status:true, msg: 'Password has been updated' });
         
 
     }catch (error) {

@@ -31,7 +31,7 @@ export const createTask = async (req, res,next) => {
         });
         
   
-        return res.json({ msg: 'Task has been created' });
+        return res.json({userTask:task});
 
     }catch(error){
         next(error);
@@ -51,6 +51,7 @@ export const getTasks = async (req, res,next) => {
             const tasks = await User.findById(userId).populate("tasks");
             const data = tasks.tasks.map(task => {
                 return {
+                    id: task._id,
                     title: task.title,
                     description: task.description,
                     priority: task.priority,
@@ -87,14 +88,24 @@ export const getTasks = async (req, res,next) => {
         
         try{
             //check if user exist in database
-        await checkUser(req,res,next);
+        // await checkUser(req,res,next);
             //update task
-            const task = await Task.findByIdAndUpdate(id,
+            const taskData = await Task.findByIdAndUpdate(id,
                 {$set: req.body},
                 {new:true});
-            return res.json(task ,
-
-                {msg: "Task has been updated"});
+                const task =
+                  {
+                        id: taskData._id,
+                        title: taskData.title,
+                        description: taskData.description,
+                        priority: taskData.priority,
+                        status: taskData.status,
+                        startedAt: taskData.startedAt,
+                        finishedAt: taskData.finishedAt
+                    }
+                   
+                
+            return res.json({task});
     
         }catch(error){
             next(error);
@@ -105,11 +116,11 @@ export const getTasks = async (req, res,next) => {
         const {id} = req.params;
         try{
             //check if user exist in database
-        await checkUser(req,res,next);
+        // await checkUser(req,res,next);
             //delete task
             const task = await Task.findByIdAndDelete(id);
-            User.findByIdAndUpdate(task.user,{$pull: {tasks: task._id}});
-
+           await User.findByIdAndUpdate(task.user,{$pull: {tasks: task._id}});
+            console.log('done');
             return res.json({msg: "Task has been deleted"});
     
             
