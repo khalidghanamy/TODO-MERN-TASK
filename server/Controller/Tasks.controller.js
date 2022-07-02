@@ -6,7 +6,7 @@ const checkUser = async (req, res, next) => {
     const { userId } = req.params;
     const user = await User.findById(userId);
     if (!user) {
-        return res.status(400).json({ msg: "User does not exist" });
+        return res.status(400).json({ status:false, msg: "User does not exist" });
     }
     
 }
@@ -30,9 +30,8 @@ export const createTask = async (req, res,next) => {
             }
         });
         
-  
-        return res.json({userTask:task});
-
+ 
+        return res.status(200).json({ status:true, msg: "Task created successfully" });
     }catch(error){
         next(error);
     }
@@ -60,7 +59,7 @@ export const getTasks = async (req, res,next) => {
                     finishedAt: task.finishedAt
                 }
             }); 
-            return res.json({userTasks:data});
+            return res.status(200).json({status:true,userTasks:data});
     
         }catch(error){
             next(error);
@@ -87,8 +86,7 @@ export const getTasks = async (req, res,next) => {
         const {id} = req.params;
         
         try{
-            //check if user exist in database
-        // await checkUser(req,res,next);
+    
             //update task
             const taskData = await Task.findByIdAndUpdate(id,
                 {$set: req.body},
@@ -105,7 +103,7 @@ export const getTasks = async (req, res,next) => {
                     }
                    
                 
-            return res.json({task});
+            return res.status(200).json({status:true,msg:"task updated successfully"});
     
         }catch(error){
             next(error);
@@ -121,7 +119,7 @@ export const getTasks = async (req, res,next) => {
             const task = await Task.findByIdAndDelete(id);
            await User.findByIdAndUpdate(task.user,{$pull: {tasks: task._id}});
             console.log('done');
-            return res.json({msg: "Task has been deleted"});
+            return res.status(200).json({status:true,msg: "Task has been deleted"});
     
             
         }catch(error){
