@@ -2,25 +2,43 @@ import AddTask from "../Components/taskComponents/AddTask.jsx";
 import Tasks from "./Tasks";
 import { useEffect,useState } from "react";
 import useTasks from "../store/Task.js"
-
+import NavBar from "../Components/NavBar.jsx";
+import {useNavigate} from 'react-router-dom'
 function Home() {
   const { tasks, getAllTasks } = useTasks();
   const [taskStatus, setTaskStatus] = useState(["Todo", "InProgress", "UnderReview", "Rework","Completed"]);
-
+  const [updateTasks ,setUpdateTasks] = useState(0)
+const navigate = useNavigate()  
+  useEffect(()=>{
+    
+    if(!localStorage.getItem("task-user")){
+        navigate("/login")
+    }
+  },[])
+  console.log(updateTasks);
+  const user = JSON.parse(localStorage.getItem("task-user"))
+    
+  
   useEffect(() => {
     (async () => {
-      await  getAllTasks("62bf03ad6d854ab86aead0c0");
+      await  getAllTasks(user._id);
      }
      )();
  
-  }, []);
+  }, [updateTasks]);
   return (
     <>
-        <div className="container p-0 m-0 d-flex justify-content-center">
-          <div className="row ">
-            <div className="col-lg-4 col-md-8 col-ms-4 d-flex justify-content-md-center p-0 m-0 ">
-          <AddTask />
+        {tasks.length>0&&<div className="container p-0 m-0">
+          <div className="row">
+          <NavBar/>
           </div>
+          <div className="row m-5 d-flex justify-content-center">
+            <div className="m-5 d-flex justify-content-center">
+          <AddTask setUpdateTasks={setUpdateTasks}/>
+          </div>
+          </div>
+          <div className="row ">
+           
           {
             taskStatus.map((task, index) => {
               
@@ -39,7 +57,7 @@ function Home() {
           </div>
           
           
-        </div>
+        </div>}
         
     </>
   );

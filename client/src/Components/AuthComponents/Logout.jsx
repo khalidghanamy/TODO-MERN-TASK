@@ -10,10 +10,12 @@ function Logout() {
     }
   return (
      <>
-      <Button onClick={handleClick}>
+      <Button variant='danger'
+      className='m-1'
+        onClick={handleClick}>
 
           <BiPowerOff/>
-          logout
+
       </Button>
      </>
   )

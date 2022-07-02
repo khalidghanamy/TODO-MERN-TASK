@@ -1,5 +1,5 @@
 import create from 'zustand';
-import {getTasks, createTask,updateTask ,deleteTask,getTask} from '../Storage/api/taskApi.js';
+import {getTasks, createTask,updateTask ,deleteTask,getTask} from '../Storage/api/taskApi.js'
 
 
 const useTasks = create(set => ({
@@ -11,22 +11,42 @@ const useTasks = create(set => ({
     }
     ,
     createTask: async (newTask,userId) => {
-        const data = await createTask(newTask,userId);
-        console.log(data);
+        try{
+
+        const {data} = await createTask(newTask,userId);
+        
         set(state => ({ tasks: [...state.tasks, data]}))
+        return data
+        }catch(err){
+            return  err.response.data
+        }
     },
     updateTask: async (id, updatedData) => {
-        const {data} = await updateTask(id, updatedData);
-        console.log(data.task);
-        
-        set(state => ({ tasks: state.tasks.map(task =>{ 
-            console.log(task.id ===data.task.id );
-            return task.id === data.task.id ? data.task : task})}))
+        try{
+
+            const {data} = await updateTask(id, updatedData);
+    
+            set(state => ({ tasks: state.tasks.map(task =>{ 
+                console.log(task.id ===data.task.id );
+                
+                return task.id === data.task.id ? data.task : task})}))
+         
+        }catch(err){
+            return err.response
+
+        }
     }
     ,
     deleteTask: async (id) => {
-        await deleteTask(id);
-        set(state => ({ tasks: state.tasks.filter(task => task.id !== id)}))
+        try{
+            const {data}= await deleteTask(id);
+            console.log(data);
+            set(state => ({ tasks: state.tasks.filter(task => task.id !== id)}))
+            return data
+        }catch(err){
+            return err.response.data
+        }
+
     }
     ,
     getTask: async (id) => {

@@ -9,9 +9,14 @@ export const getTasks = async (userId) => {
   return data.userTasks
 };
 export const createTask = async(newTask,userId) => {
-   const {data}= await axios.post(`${url}/create/${userId}`, newTask)
-   console.log(data.userTask);
-    return data.userTask
+  try {
+    const data = await axios.post(`${url}/create/${userId}`, newTask)
+    
+    return data
+    
+  } catch (error) {
+    return error.response.data
+  }
 };
 
 export const updateTask = async(id, updateTask) => await axios.put(`${url}/${id}`, updateTask);

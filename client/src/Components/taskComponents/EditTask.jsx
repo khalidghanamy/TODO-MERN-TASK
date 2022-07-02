@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/esm/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import useTasks from '../../store/Task';
+import {ToastContainer,toast} from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 import {AiFillEdit} from 'react-icons/ai';
 function EditeTask({task}) {
     const [show, setShow] = useState(false);
@@ -10,20 +12,84 @@ function EditeTask({task}) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [taskData, setTaskData] = useState(task);
+   
     
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newTask = {
-        ...task, title: e.target.title.value,
-        description: e.target.description.value,
-        priority: e.target.priority.value,
-        status: e.target.status.value,
-        startedAt: e.target.startedAt.value? e.target.startedAt.value : task.startedAt,
-        finishedAt: e.target.finishedAt.value? e.target.finishedAt.value : task.finishedAt,
-    };
-    console.log(newTask);
-    updateTask(task.id,newTask);
-    }
+ 
+
+      //============== toast handler ===============
+  const headers = {
+    "Content-Type": "application/json",
+    
+  };
+const toastOption={
+    position:"top-right",
+    autoClose:8000,
+    pauseOnHover:true,
+    draggable:true,
+    
+    theme:"dark",
+    
+ }
+//=====================handle Submit=======================
+const handleSubmit=async (event)=>{
+    event.preventDefault();
+   if(handleValidation()){
+    
+await updateTask(task.id,taskData);
+handleClose()
+        
+       
+      }
+  }
+ 
+
+//=====================validation=======================
+
+const handleValidation=()=>{
+    const {
+      title,
+      description,
+      priority,
+      startedAt,
+      finishedAt,
+    } = taskData;
+    console.log(taskData);
+  if (description==="") {
+    toast.error("description is required",toastOption);
+    return false;
+  }
+  if (title.length < 3||title==="") {
+    toast.error("title must be greater than 3",toastOption);
+    return false;
+  }
+
+  if (priority==="") {
+    toast.error("priority is required",toastOption);
+    return false;
+
+
+  }
+  if (
+    startedAt > finishedAt ||
+    startedAt === finishedAt ||
+    startedAt === "" ||
+    finishedAt === ""
+  ) {
+    toast.error("date is invalid",toastOption);
+    return false;
+  }
+  
+
+  return true
+  ;
+}
+
+
+
+const handleChange=(event)=>{
+    setTaskData({...taskData,[event.target.name]:event.target.value})
+}
+//==============================
 
     const {updateTask} = useTasks()
     return (
@@ -53,7 +119,7 @@ function EditeTask({task}) {
             name="description"
             required
             type="text"
-            onChange={(e)=>setTaskData({...taskData,description:e.target.value})}
+            onChange={(event)=> handleChange(event)}
             value={taskData.description} />
           </Form.Group>
           {/* ======================================================== */}
@@ -64,7 +130,7 @@ function EditeTask({task}) {
             required
             maxLength="5"
             type="text"
-            onChange={(e)=>setTaskData({...taskData,title:e.target.value})}
+            onChange={(event)=> handleChange(event)}
             value={taskData.title} />
           </Form.Group>
           {/* ======================================================== */}
@@ -73,7 +139,7 @@ function EditeTask({task}) {
             <Form.Control id="startedAt" 
             name="startedAt" 
             type="dateTime-local"
-            onChange={(e)=>setTaskData({...taskData,startedAt:e.target.value})}
+            onChange={(event)=> handleChange(event)}
             value={taskData.startedAt} />
           </Form.Group>
           {/* ======================================================== */}
@@ -82,7 +148,7 @@ function EditeTask({task}) {
             <Form.Control id="finishedAt" 
             name="finishedAt"
             type="dateTime-local"
-            onChange={(e)=>setTaskData({...taskData,finishedAt:e.target.value})}
+            onChange={(event)=> handleChange(event)}
             value={taskData.finishedAt} />
           </Form.Group>
           {/* ======================================================== */}
@@ -91,7 +157,7 @@ function EditeTask({task}) {
             <Form.Label htmlFor="priority">Priority</Form.Label>
             <Form.Select id="priority"
             name="priority"
-            onChange={(e)=>setTaskData({...taskData,priority:e.target.value})}
+            onChange={(event)=> handleChange(event)}
             value={taskData.priority}
             >
               <option value="Low" defaultValue="Low">
@@ -107,7 +173,7 @@ function EditeTask({task}) {
             <Form.Label htmlFor="status">Status</Form.Label>
             <Form.Select id="status"
             name="status"
-            onChange={(e)=>setTaskData({...taskData, status:e.target.value})}
+            onChange={(event)=> handleChange(event)}
             value={taskData.status}
             >
               <option value="Todo">
