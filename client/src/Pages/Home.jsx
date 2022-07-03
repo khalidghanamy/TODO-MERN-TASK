@@ -10,7 +10,7 @@ function Home() {
   const { tasks, getAllTasks } = useTasks();
   const [taskStatus, setTaskStatus] = useState(["Todo", "InProgress", "UnderReview", "Rework","Completed"]);
 const navigate = useNavigate()  
-const [user, setUser] = useState(undefined);
+const [user, setUser] = useState({});
 
 const [tasksTest,setTasksTest]=useState(tasks)
 const [updateList,setUpdateList]=useState(0)
