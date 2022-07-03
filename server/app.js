@@ -2,6 +2,9 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import {fileURLToPath} from 'url';
+
 //=====================================================
 import connectToDb from "./Database/connection.js";
 import errorHandler from "./Middlewares/errorMiddleware.js";
@@ -34,8 +37,24 @@ app.use("/auth", Auth);
 app.use(ResetPassword);
 app.use("/tasks", Tasks);
 
+//====> Deployment <========================================
 
+const __filename = fileURLToPath(import.meta.url);
 
+let __dirname = path.dirname(__filename);
+const dirname = __dirname.split("/")
+console.log(dirname.pop());
+ __dirname =dirname.join("/");
+
+console.log('directory-name 👉️', __dirname);
+
+if(process.env.NODE_ENV==="production"){
+    app.use(express.static(path.join(__dirname,"/client/build")));
+    app.get("*",(req,res)=>{
+        res.sendFile(path.resolve(__dirname,"client","build","index.html"));
+    }
+    )
+}
 //====> Middleware <========================================
 
 app.use(errorHandler);
