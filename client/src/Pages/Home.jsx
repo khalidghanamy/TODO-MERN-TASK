@@ -9,6 +9,7 @@ function Home() {
   const [taskStatus, setTaskStatus] = useState(["Todo", "InProgress", "UnderReview", "Rework","Completed"]);
   const [updateTasks ,setUpdateTasks] = useState(0)
 const navigate = useNavigate()  
+
   useEffect(()=>{
     
     if(!localStorage.getItem("task-user")){
@@ -18,6 +19,8 @@ const navigate = useNavigate()
   console.log(updateTasks);
   const user = JSON.parse(localStorage.getItem("task-user"))
     
+
+  console.log(tasks.length);
   
   useEffect(() => {
     (async () => {
@@ -25,15 +28,15 @@ const navigate = useNavigate()
      }
      )();
  
-  }, [updateTasks]);
+  }, [tasks.length]);
   return (
     <>
-        {tasks.length>0&&<div className="container p-0 m-0">
+        {tasks.length>0 &&<div className="container p-0 m-0">
           <div className="row">
           <NavBar/>
           </div>
-          <div className="row m-5 d-flex justify-content-center">
-            <div className="m-5 d-flex justify-content-center">
+          <div className="row mt-5 d-flex justify-content-center">
+            <div className="mt-5 d-flex justify-content-center">
           <AddTask setUpdateTasks={setUpdateTasks}/>
           </div>
           </div>
