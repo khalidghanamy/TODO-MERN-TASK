@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 function Home() {
-  const { tasks, getAllTasks } = useTasks();
+  const { tasks, getAllTasks,updateTask } = useTasks();
   const [taskStatus, setTaskStatus] = useState(["Todo", "InProgress", "UnderReview", "Rework","Completed"]);
 const navigate = useNavigate()  
 const [user, setUser] = useState({});
@@ -27,8 +27,40 @@ useEffect(() => {
   getMe();
 }, []);
 
+const updateListStatus = async (newItem)=>{
+
+  await updateTask(newItem.id,newItem);
+
+
+}
+
+const onDragEnd = async (result) => {
+  console.log(result);
+  if (!result.destination) {
+    return;
+  }
 
   
+  
+    const items =Array.from(tasksTest)
+    const item=items[result.source.index]
+    if (result.destination !== null && result.source.droppableId !=="Completed") {
+      const newItem ={...item,status:result.destination.droppableId}
+      await updateListStatus(newItem)
+      console.log('done');
+      setUpdateList(Math.random()*100);
+
+
+
+    
+
+
+    const [reOrderedItems] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reOrderedItems);
+    console.log(items);
+    setTasksTest(items);
+}
+};
 
 
 
@@ -55,19 +87,18 @@ useEffect(() => {
           <AddTask setUpdateList={setUpdateList}/>
           </div>
           </div>
-          <DragDropContext >
+          <DragDropContext onDragEnd={onDragEnd} >
           <div className="row" style={{marginRight:"5.1rem"}}>
            
           {tasks.length>0&&
-            taskStatus.map((task, index) => {
+            taskStatus.map((task, index) => (
               
-              return (
+           
                 <div className="col-lg-4 col-md-6 col-sm-12 mt-3" key={index}>
                   <Tasks tasks={tasksTest}  taskStatus={task} key={index} setUpdateList={setUpdateList} updateList={updateList}/>
                 </div>
-              );
-            }
-            )
+              
+            ))
           }
     
             
@@ -82,5 +113,20 @@ useEffect(() => {
     </>
   );
 }
+
+const removeFromList = (list, index) => {
+  console.log(Array.from(list));
+  const result = list;
+  const [removed] = result.splice(index, 1);
+  return [removed, result];
+};
+
+const addToList = (list, index, element) => {
+  const result = Array.from(list);
+  result.splice(index, 0, element);
+  return result;
+};
+
+
 
 export default Home;

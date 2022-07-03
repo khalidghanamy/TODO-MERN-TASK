@@ -1,13 +1,17 @@
-import {useState,useEffect} from 'react';
+import {useState} from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import useTasks from '../../store/Task';
 import {ToastContainer,toast} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+
 import {AiFillEdit} from 'react-icons/ai';
+
+
 function EditeTask({task,setUpdateList}) {
-    const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
+  const {updateTask} = useTasks()
   
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -38,16 +42,15 @@ const handleSubmit=async (event)=>{
 await updateTask(task.id,taskData);
 handleClose()
 setUpdateList(Math.random()*100);
-setUpdateList(Math.random()*100);
-setUpdateList(Math.random()*100);
+
         
        
       }
   }
  
-
-//=====================validation=======================
-
+  
+  //=====================validation=======================
+  
 const handleValidation=()=>{
     const {
       title,
@@ -93,7 +96,6 @@ const handleChange=(event)=>{
 }
 //==============================
 
-    const {updateTask} = useTasks()
     return (
       <>
         <Button variant="success"className='m-2' onClick={handleShow}>
