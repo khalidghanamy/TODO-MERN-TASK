@@ -46,7 +46,11 @@ const onDragEnd = async (result) => {
     const item=items[result.source.index]
     if (result.destination !== null && result.source.droppableId !=="Completed") {
       const newItem ={...item,status:result.destination.droppableId}
+
       await updateListStatus(newItem)
+      const [removed] = removeFromList(items, result.source.index);
+      const newItems = addToList(items, result.destination.index, removed);
+      setTasksTest(newItems);
       console.log('done');
       setUpdateList(Math.random()*100);
 
