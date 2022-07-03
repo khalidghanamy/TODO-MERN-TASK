@@ -12,9 +12,9 @@ const Task = ({task ,setUpdateList}) => {
         <>
             <Card className="container" >
          
-                <div className="row">
+                <div className="row align-items-center">
              
-               <div className="col-4">
+               <div className="col-4 ">
                     <Card.Title>{task.title}</Card.Title>
                     </div>
                 <div className="row col-8 justify-content-evenly">
