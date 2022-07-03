@@ -42,17 +42,17 @@ app.use("/tasks", Tasks);
 const __filename = fileURLToPath(import.meta.url);
 
 let __dirname = path.dirname(__filename);
-const dirname = __dirname.split("/")
-console.log(dirname.pop());
- __dirname =dirname.join("/");
+// const dirname = __dirname.split("/")
+// console.log(dirname.pop());
+//  __dirname =dirname.join("/");
 
 console.log('directory-name 👉️', __dirname);
 
 if(process.env.NODE_ENV==="production"){
-    app.use(express.static(path.join(__dirname,"/client/build")));
+    app.use(express.static(path.join(__dirname,"/build")));
     app.get("*",(req,res)=>{
-        console.log('fff',process.env.NODE_ENV,__dirname);
-        console.log(path.resolve(__dirname,"client","build","index.html"));
+        res.sendFile(path.join(__dirname,"/build/index.html"));
+        // console.log(path.resolve(__dirname,"client","build","index.html"));
     }
     )
 }
