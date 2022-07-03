@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import {ToastContainer,toast} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-const AddTask = ({ setUpdateTasks }) => {
+const AddTask = ({  }) => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const user = JSON.parse(localStorage.getItem("task-user"))
@@ -52,7 +52,6 @@ const handleSubmit=async (event)=>{
        toast.error(data.msg,toastOption)}
         if(data.status===true){
           handleClose()
-          setUpdateTasks(Math.random)
           
         }
        
@@ -145,7 +144,7 @@ const handleChange=(event)=>{
         <Form.Control id="title" 
         name="title"
         required
-        maxLength="5"
+        maxLength="50"
         type="text"
         onChange={(event)=> handleChange(event)}
 

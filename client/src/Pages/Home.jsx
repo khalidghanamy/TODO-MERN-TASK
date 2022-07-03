@@ -7,7 +7,6 @@ import {useNavigate} from 'react-router-dom'
 function Home() {
   const { tasks, getAllTasks } = useTasks();
   const [taskStatus, setTaskStatus] = useState(["Todo", "InProgress", "UnderReview", "Rework","Completed"]);
-  const [updateTasks ,setUpdateTasks] = useState(0)
 const navigate = useNavigate()  
 
   useEffect(()=>{
@@ -16,7 +15,6 @@ const navigate = useNavigate()
         navigate("/login")
     }
   },[])
-  console.log(updateTasks);
   const user = JSON.parse(localStorage.getItem("task-user"))
     
 
@@ -28,7 +26,7 @@ const navigate = useNavigate()
      }
      )();
  
-  }, [tasks.length]);
+  }, []);
   return (
     <>
         {tasks.length>0 &&<div className="container p-0 m-0">
@@ -37,7 +35,7 @@ const navigate = useNavigate()
           </div>
           <div className="row mt-5 d-flex justify-content-center">
             <div className="mt-5 d-flex justify-content-center">
-          <AddTask setUpdateTasks={setUpdateTasks}/>
+          <AddTask/>
           </div>
           </div>
           <div className="row" style={{marginRight:"5.1rem"}}>
