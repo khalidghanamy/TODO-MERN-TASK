@@ -20,8 +20,12 @@ useEffect(() => {
   }
   getMe();
 }, []);
+try {
+  const result = JSON.parse(undefined);
   const user = JSON.parse(localStorage.getItem("task-user"))
-    console.log(tasks);
+} catch (err) {
+  console.log('Error: ', err.message);
+}
 
   console.log(tasks.length);
   
