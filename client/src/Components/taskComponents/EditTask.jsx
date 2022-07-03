@@ -179,7 +179,8 @@ const handleChange=(event)=>{
               <option value="Todo">
                 Todo
               </option>
-              <option value="In progress">In progress</option>
+              <option value="InProgress">In progress</option>
+              <option value="UnderReview">UnderReview</option>
               <option value="Rework">Rework</option>
               <option value="Completed">Completed</option>
             </Form.Select>
