@@ -14,6 +14,7 @@ const [filteredTasks, setFilteredTasks] = useState([]);
     }
 
     const onDragEnd = result => {
+        console.log(result);
         if(result.destination ){
 
             const items =Array.from(filteredTasks)
