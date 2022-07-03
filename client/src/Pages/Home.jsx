@@ -20,15 +20,19 @@ useEffect(() => {
   }
   getMe();
 }, []);
+
+
+const returnUser = () => {
+  
 try {
   const result = JSON.parse(undefined);
   const user = JSON.parse(localStorage.getItem("task-user"))
+  return user;
 } catch (err) {
   console.log('Error: ', err.message);
 }
-
-  console.log(tasks.length);
-  
+}
+  const user = returnUser();
   useEffect(() => {
     (async () => {
      const data = await  getAllTasks(user._id);
