@@ -5,15 +5,16 @@ import useTasks from '../store/Task.js'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 
-const Tasks = ({tasks,taskStatus}) => {
+const Tasks = ({tasks,taskStatus,setUpdateList,updateList}) => {
+
 const [filteredTasks, setFilteredTasks] = useState([]);
     const CheckStatus = () => {
         const filteredTasks =tasks.filter(task => task.status === taskStatus);
+        console.log("ggggggggggggggggggggggggggggggggg");
         return filteredTasks;
     }
 
     const onDragEnd = result => {
-        console.log(result);
         if(result.destination ){
 
             const items =Array.from(filteredTasks)
@@ -22,15 +23,14 @@ const [filteredTasks, setFilteredTasks] = useState([]);
             setFilteredTasks(items);
         }
     }
-
+console.log(tasks.length);
     useEffect(() => {
         setFilteredTasks(CheckStatus());
     }
-    , [taskStatus]);
+    , [tasks.length,updateList]);
 
+ 
 
-
-console.log(taskStatus);
     return ( 
         <>
             <Card className="p-0 m-5 w-100 h-100">
@@ -55,7 +55,7 @@ console.log(taskStatus);
                     
                 
             
-                <Task key={taskStatus} task={task} />
+                <Task key={taskStatus} task={task} setUpdateList={setUpdateList} />
 
             
             </div>

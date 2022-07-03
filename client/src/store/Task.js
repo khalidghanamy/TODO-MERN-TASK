@@ -7,7 +7,9 @@ const useTasks = create(set => ({
     task: {},
     getAllTasks: async (userId)=>{
         const data = await getTasks(userId);
+        console.log(data);
         set(state => ({ tasks:data}))
+        return data
     }
     ,
     createTask: async (newTask,userId) => {

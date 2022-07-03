@@ -5,7 +5,7 @@ import EditeTask from "./EditTask";
 import useTasks from "../../store/Task";
 import DeleteTask from "./DeleteTask.jsx";
 import Logout from "../AuthComponents/Logout.jsx";
-const Task = ({task }) => {
+const Task = ({task ,setUpdateList}) => {
  
 
     return ( 
@@ -22,7 +22,7 @@ const Task = ({task }) => {
                     <TaskDetails  task={task}/> 
                     </div>
                     <div className="col-2 m-1">
-                    <EditeTask  task={task}/> 
+                    <EditeTask  task={task} setUpdateList={setUpdateList}/> 
                     </div>
 
                     <div className="col-2 m-1">

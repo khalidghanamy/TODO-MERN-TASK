@@ -6,7 +6,7 @@ import useTasks from '../../store/Task';
 import {ToastContainer,toast} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import {AiFillEdit} from 'react-icons/ai';
-function EditeTask({task}) {
+function EditeTask({task,setUpdateList}) {
     const [show, setShow] = useState(false);
   
     const handleClose = () => setShow(false);
@@ -37,6 +37,7 @@ const handleSubmit=async (event)=>{
     
 await updateTask(task.id,taskData);
 handleClose()
+setUpdateList(Math.random()*100);
         
        
       }
@@ -53,7 +54,6 @@ const handleValidation=()=>{
       startedAt,
       finishedAt,
     } = taskData;
-    console.log(taskData);
   if (description==="") {
     toast.error("description is required",toastOption);
     return false;
