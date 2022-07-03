@@ -4,19 +4,23 @@ import { useEffect,useState } from "react";
 import useTasks from "../store/Task.js"
 import NavBar from "../Components/NavBar.jsx";
 import {useNavigate} from 'react-router-dom'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 function Home() {
   const { tasks, getAllTasks } = useTasks();
   const [taskStatus, setTaskStatus] = useState(["Todo", "InProgress", "UnderReview", "Rework","Completed"]);
 const navigate = useNavigate()  
-const [currentUser, setCurrentUser] = useState(undefined);
+const [user, setUser] = useState(undefined);
 
 const [tasksTest,setTasksTest]=useState(tasks)
 const [updateList,setUpdateList]=useState(0)
 useEffect(() => {
-  async function getMe() {
+   function getMe() {
     if (!localStorage.getItem("task-user")) {
       navigate("/login");
-    } 
+    }
+    
+     
   }
   getMe();
 }, []);
@@ -24,13 +28,16 @@ useEffect(() => {
 
   
 
-  const user = JSON.parse(localStorage.getItem("task-user"))
 
 
-
-  useEffect(() => {
-    (async () => {
+useEffect(() => {
+  (async () => {
+    const user = JSON.parse(localStorage.getItem("task-user"));
+    setUser(user);
+  
      const data = await  getAllTasks(user._id);
+     console.log("=========home=====",data)
+     console.log("=========home=====")
      setTasksTest(data)
      }
      )();
@@ -38,7 +45,7 @@ useEffect(() => {
   }, [tasks.length,updateList]);
   return (
     <>
-        {tasks.length &&<div className="container p-0 m-0">
+        {<div className="container p-0 m-0">
           <div className="row">
           <NavBar/>
           </div>
@@ -47,10 +54,11 @@ useEffect(() => {
           <AddTask setUpdateList={setUpdateList}/>
           </div>
           </div>
+          <DragDropContext >
           <div className="row" style={{marginRight:"5.1rem"}}>
            
-          {
-            tasks.length && taskStatus.map((task, index) => {
+          {tasks.length>0&&
+            taskStatus.map((task, index) => {
               
               return (
                 <div className="col-lg-4 col-md-6 col-sm-12 mt-3" key={index}>
@@ -65,6 +73,7 @@ useEffect(() => {
            
             
           </div>
+          </DragDropContext>
           
           
         </div>}

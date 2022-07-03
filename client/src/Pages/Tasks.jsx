@@ -8,10 +8,12 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 const Tasks = ({tasks,taskStatus,setUpdateList,updateList}) => {
 
 const [filteredTasks, setFilteredTasks] = useState([]);
-    const CheckStatus = () => {
-        const filteredTasks =tasks.filter(task => task.status === taskStatus);
-        return filteredTasks;
-    }
+
+const CheckStatus = () => {
+    
+    const filteredTasks =tasks.filter(task => task.status === taskStatus);
+    return filteredTasks;
+}
 
     const onDragEnd = result => {
         console.log(result);
@@ -23,12 +25,13 @@ const [filteredTasks, setFilteredTasks] = useState([]);
             setFilteredTasks(items);
         }
     }
-console.log(tasks.length);
+
     useEffect(() => {
         setFilteredTasks(CheckStatus());
     }
-    , [tasks.length,updateList]);
+   ,[tasks.length,updateList] );
 
+console.log(updateList);
  
 
     return ( 

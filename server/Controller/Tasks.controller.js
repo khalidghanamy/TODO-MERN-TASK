@@ -103,7 +103,7 @@ export const getTasks = async (req, res,next) => {
                     }
                    
                 
-            return res.status(200).json({status:true,msg:"task updated successfully"});
+            return res.status(200).json({task:taskData,status:true,msg:"task updated successfully"});
     
         }catch(error){
             next(error);

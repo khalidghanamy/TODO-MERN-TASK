@@ -27,11 +27,11 @@ const useTasks = create(set => ({
         try{
 
             const {data} = await updateTask(id, updatedData);
-    
-            set(state => ({ tasks: state.tasks.map(task =>{ 
-                console.log(task.id ===data.task.id );
-                
-                return task.id === data.task.id ? data.task : task})}))
+                    
+            // set(state => ({ tasks: state.tasks.filter(
+            //     task =>  task.id === data.task_.id ? data.task : task)}))
+            set(state => ({ tasks: state.tasks.filter(task => task.id !== data.task_.id)}))
+            return data
          
         }catch(err){
             return err.response

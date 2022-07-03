@@ -38,6 +38,8 @@ const handleSubmit=async (event)=>{
 await updateTask(task.id,taskData);
 handleClose()
 setUpdateList(Math.random()*100);
+setUpdateList(Math.random()*100);
+setUpdateList(Math.random()*100);
         
        
       }
