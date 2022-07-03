@@ -24,7 +24,6 @@ useEffect(() => {
 
   
 
-  const result = JSON.parse(undefined);
   const user = JSON.parse(localStorage.getItem("task-user"))
 
 
