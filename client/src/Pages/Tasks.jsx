@@ -13,10 +13,14 @@ const [filteredTasks, setFilteredTasks] = useState([]);
     }
 
     const onDragEnd = result => {
-        const items =Array.from(filteredTasks)
-        const [reOrderedItems] = items.splice(result.source.index, 1);
-        items.splice(result.destination.index, 0, reOrderedItems);
-        setFilteredTasks(items);
+        console.log(result);
+        if(result.destination ){
+
+            const items =Array.from(filteredTasks)
+            const [reOrderedItems] = items.splice(result.source.index, 1);
+            items.splice(result.destination.index, 0, reOrderedItems);
+            setFilteredTasks(items);
+        }
     }
 
     useEffect(() => {
@@ -35,11 +39,11 @@ console.log(taskStatus);
                 </Card.Header>
             <Card.Body>
                 <DragDropContext onDragEnd={onDragEnd} >
-                    <Droppable droppableId="droppable">
+                    <Droppable droppableId={taskStatus}>
 
 
           { (provided)=>(
-            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} >
+            <div ref={provided.innerRef} {...provided.droppableProps} {...provided.dragHandleProps} >
           {filteredTasks.map((task,index) => (
             <Draggable key={task.id} draggableId={task.id.toString()} index={index} >
                 {(provided) => (
@@ -51,7 +55,7 @@ console.log(taskStatus);
                     
                 
             
-                <Task task={task} />
+                <Task key={taskStatus} task={task} />
 
             
             </div>

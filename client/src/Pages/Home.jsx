@@ -44,7 +44,7 @@ const navigate = useNavigate()
               
               return (
                 <div className="col-lg-4 col-md-6 col-sm-12 mt-3" key={index}>
-                  <Tasks tasks={tasks}  taskStatus={task}/>
+                  <Tasks tasks={tasks}  taskStatus={task} key={index}/>
                 </div>
               );
             }
