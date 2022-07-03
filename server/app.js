@@ -52,7 +52,7 @@ console.log('directory-name 👉️', __dirname);
 if(process.env.NODE_ENV==="production"){
     app.use(express.static(path.join(__dirname,"/build")));
     app.get("*",(req,res)=>{
-        console.log(path.resolve(__dirname,"client","build","index.html"));
+       return path.resolve(__dirname,"client","build","index.html");
     }
     )
 }
