@@ -40,7 +40,7 @@ const navigate = useNavigate()
           <AddTask setUpdateTasks={setUpdateTasks}/>
           </div>
           </div>
-          <div className="row ">
+          <div className="row" style={{marginRight:"5rem"}}>
            
           {
             taskStatus.map((task, index) => {
