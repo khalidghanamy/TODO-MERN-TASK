@@ -36,8 +36,7 @@ useEffect(() => {
     setUser(user);
   
      const data = await  getAllTasks(user._id);
-     console.log("=========home=====",data)
-     console.log("=========home=====")
+    
      setTasksTest(data)
      }
      )();
