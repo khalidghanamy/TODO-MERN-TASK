@@ -38,7 +38,7 @@ useEffect(() => {
   }, [tasks.length,updateList]);
   return (
     <>
-        {tasks.length>0 &&<div className="container p-0 m-0">
+        {tasks.length &&<div className="container p-0 m-0">
           <div className="row">
           <NavBar/>
           </div>
