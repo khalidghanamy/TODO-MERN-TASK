@@ -16,10 +16,7 @@ useEffect(() => {
   async function getMe() {
     if (!localStorage.getItem("task-user")) {
       navigate("/login");
-    } else {
-      setCurrentUser(await JSON.parse(localStorage.getItem("task-user")));
-     
-    }
+    } 
   }
   getMe();
 }, []);
