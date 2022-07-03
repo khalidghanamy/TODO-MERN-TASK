@@ -1,5 +1,6 @@
 const notFound = (req, res, next) => {
-    res.status(404).send("Not found");
+    
+   return res.status(404).json({msg:"not found"})
 }
 
 export default notFound;
