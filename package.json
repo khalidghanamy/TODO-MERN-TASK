@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server/app.js"
+    "server": "nodemon server/app.js",
+    "client": "npm start --prefix client",
+    "start": "nodemon server/app.js",
+    "heroku-postbuild": "npm run start"
   },
   "keywords": [],
   "author": "",
