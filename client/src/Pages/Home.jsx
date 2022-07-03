@@ -15,10 +15,12 @@ const [user, setUser] = useState({});
 const [tasksTest,setTasksTest]=useState(tasks)
 const [updateList,setUpdateList]=useState(0)
 useEffect(() => {
-   function getMe() {
+  async function getMe() {
     if (!localStorage.getItem("task-user")) {
       navigate("/login");
     }
+    const user = JSON.parse(localStorage.getItem("task-user"));
+    setUser(user);
     
      
   }

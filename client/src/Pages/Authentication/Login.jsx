@@ -43,7 +43,7 @@ const Login = () => {
            toast.error(data.msg,toastOption)}
            if(data.status===true){
                localStorage.setItem("task-user",JSON.stringify(data.user))
-                  navigate("/home")
+                  navigate("/")
             }
         }
     }
