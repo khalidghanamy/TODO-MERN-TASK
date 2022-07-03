@@ -8,14 +8,21 @@ function Home() {
   const { tasks, getAllTasks } = useTasks();
   const [taskStatus, setTaskStatus] = useState(["Todo", "InProgress", "UnderReview", "Rework","Completed"]);
 const navigate = useNavigate()  
+const [currentUser, setCurrentUser] = useState(undefined);
+
 const [tasksTest,setTasksTest]=useState(tasks)
 const [updateList,setUpdateList]=useState(0)
-  useEffect(()=>{
-    
-    if(!localStorage.getItem("task-user")){
-        navigate("/login")
+useEffect(() => {
+  async function getMe() {
+    if (!localStorage.getItem("task-user")) {
+      navigate("/login");
+    } else {
+      setCurrentUser(await JSON.parse(localStorage.getItem("task-user")));
+     
     }
-  },[])
+  }
+  getMe();
+}, []);
   const user = JSON.parse(localStorage.getItem("task-user"))
     console.log(tasks);
 

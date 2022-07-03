@@ -113,9 +113,7 @@ export const getTasks = async (req, res,next) => {
     export const deleteTask = async (req, res,next) => {
         const {id} = req.params;
         try{
-            //check if user exist in database
-        // await checkUser(req,res,next);
-            //delete task
+            
             const task = await Task.findByIdAndDelete(id);
            await User.findByIdAndUpdate(task.user,{$pull: {tasks: task._id}});
             console.log('done');

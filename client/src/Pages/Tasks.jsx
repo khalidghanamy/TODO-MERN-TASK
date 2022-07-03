@@ -10,7 +10,6 @@ const Tasks = ({tasks,taskStatus,setUpdateList,updateList}) => {
 const [filteredTasks, setFilteredTasks] = useState([]);
     const CheckStatus = () => {
         const filteredTasks =tasks.filter(task => task.status === taskStatus);
-        console.log("ggggggggggggggggggggggggggggggggg");
         return filteredTasks;
     }
 
