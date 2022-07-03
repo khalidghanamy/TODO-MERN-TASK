@@ -27,6 +27,8 @@ useEffect(() => {
   getMe();
 }, []);
 
+
+
 const updateListStatus = async (newItem)=>{
 
   await updateTask(newItem.id,newItem);
@@ -44,12 +46,18 @@ const onDragEnd = async (result) => {
   
     const items =Array.from(tasksTest)
     const item=items[result.source.index]
-    if (result.destination !== null && result.source.droppableId !=="Completed") {
+    console.log(item);
+    
+     if (result.destination !== null ) {
       const newItem ={...item,status:result.destination.droppableId}
+     
 
       await updateListStatus(newItem)
       const [removed] = removeFromList(items, result.source.index);
       const newItems = addToList(items, result.destination.index, removed);
+      const [reOrderedItems] = items.splice(result.source.index, 1);
+      items.splice(result.destination.index, 0, reOrderedItems);
+      console.log(items);
       setTasksTest(newItems);
       console.log('done');
       setUpdateList(Math.random()*100);
@@ -59,10 +67,6 @@ const onDragEnd = async (result) => {
     
 
 
-    const [reOrderedItems] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reOrderedItems);
-    console.log(items);
-    setTasksTest(items);
 }
 };
 
@@ -117,6 +121,8 @@ useEffect(() => {
     </>
   );
 }
+
+
 
 const removeFromList = (list, index) => {
   console.log(Array.from(list));
