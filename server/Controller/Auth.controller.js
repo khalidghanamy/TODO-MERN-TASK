@@ -41,7 +41,7 @@ export const signup = async (req, res,next) => {
             delete savedUser.password;
             return res.status(200).json({status:true,newUser});
         } catch (error) {
-            return res.status(400).json({ status:false, msg: 'Something went wrong' });
+            return res.status(400).json({ status:false, msg: 'User name or email are not valid' });
         }
        
       
