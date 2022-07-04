@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const url = 'http://localhost:4000/auth';
-const urlReset = 'http://localhost:4000';
+
+const url = `${process.env.REACT_APP_SERVER_URL}/auth`;
+const urlReset = `${process.env.REACT_APP_SERVER_URL}`;
 
 export const login = async (loginData) => {
     try{

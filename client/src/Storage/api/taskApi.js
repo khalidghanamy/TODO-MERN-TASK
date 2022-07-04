@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://localhost:4000/tasks';
+const url = `${process.env.REACT_APP_SERVER_URL}/tasks`;
 
 export const getTasks = async (userId) => {
   const {data}= await axios.get(`${url}/read/${userId}`

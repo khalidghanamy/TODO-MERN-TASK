@@ -7,7 +7,6 @@ const useTasks = create(set => ({
     task: {},
     getAllTasks: async (userId)=>{
         const data = await getTasks(userId);
-        console.log(data);
         set(state => ({ tasks:data}))
         return data
     }
@@ -41,7 +40,6 @@ const useTasks = create(set => ({
     deleteTask: async (id) => {
         try{
             const {data}= await deleteTask(id);
-            console.log(data);
             set(state => ({ tasks: state.tasks.filter(task => task.id !== id)}))
             return data
         }catch(err){

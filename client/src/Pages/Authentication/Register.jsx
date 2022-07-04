@@ -20,7 +20,7 @@ const Register = () => {
           navigate("/home")
       }
   },[])
-
+  
     //============== toast handler ===============
     const headers = {
         "Content-Type": "application/json",

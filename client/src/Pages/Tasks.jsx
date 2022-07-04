@@ -29,11 +29,7 @@ const CheckStatus = () => {
     useEffect(() => {
         setFilteredTasks(CheckStatus());
     }
-   ,[tasks.length,updateList] );
-
-console.log(updateList);
- 
-
+   ,[tasks.length,updateList] ); 
     return ( 
         <>
             <Card className="p-0 m-5 w-100 h-100">
