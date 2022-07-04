@@ -9,6 +9,7 @@
     "server": "nodemon server/app.js",
     "client": "npm start --prefix client",
     "start": "nodemon server/app.js"
+    
   },
   "keywords": [],
   "author": "",
